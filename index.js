@@ -1,11 +1,12 @@
 const { exec } = require('child_process');
+const fs = require('fs');
 
 // Function to execute Git commands
 function gitCommand(command) {
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                reject(error);
+                reject(stderr.trim());
                 return;
             }
             resolve(stdout.trim());
@@ -13,16 +14,24 @@ function gitCommand(command) {
     });
 }
 
+// Function to modify a dummy file
+function modifyDummyFile() {
+    const filePath = 'dummy.txt';
+    const content = `Auto commit update: ${new Date().toISOString()}\n`;
+    fs.appendFileSync(filePath, content);
+}
+
 async function commitToGit() {
     try {
+        modifyDummyFile(); // Ensure there's a change to commit
+
         // Add files to staging area
         await gitCommand('git add .');
 
-        // Commit with current timestamp
-        const commitDate = new Date().toISOString();
-        await gitCommand(`GIT_COMMITTER_DATE="${commitDate}" git commit --date="${commitDate}" -m "Auto Commit - ${commitDate}"`);
+        // Commit with a message
+        await gitCommand(`git commit -m "Auto Commit - ${new Date().toISOString()}"`);
 
-        console.log(`Committed at ${commitDate}`);
+        console.log(`Committed at ${new Date().toISOString()}`);
     } catch (error) {
         console.error('Error committing to Git:', error);
     }
