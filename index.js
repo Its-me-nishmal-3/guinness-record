@@ -47,7 +47,7 @@ async function pushToGit() {
 }
 
 // Run commitToGit every 1 second
-setInterval(commitToGit, 0);
+setInterval(commitToGit, 1000);
 
 // Run pushToGit every 10 seconds
-setInterval(pushToGit, 10);
+setInterval(pushToGit, 10000);
