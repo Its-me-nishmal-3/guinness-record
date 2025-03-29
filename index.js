@@ -21,6 +21,7 @@ function modifyDummyFile() {
     fs.appendFileSync(filePath, content);
 }
 
+var c = 0;
 async function commitToGit() {
     try {
         modifyDummyFile(); // Ensure there's a change to commit
@@ -29,7 +30,8 @@ async function commitToGit() {
         await gitCommand('git add .');
 
         // Commit with a message
-        await gitCommand(`git commit -m "Auto Commit - ${new Date().toISOString()}"`);
+        await gitCommand(`git commit -m "Auto Commit ${c} - ${new Date().toISOString()}"`);
+        c++
 
         console.log(`Committed at ${new Date().toISOString()}`);
     } catch (error) {
