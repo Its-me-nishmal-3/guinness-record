@@ -32,6 +32,7 @@ async function commitToGit() {
         // Commit with a message
         await gitCommand(`git commit -m "Auto Commit ${c} - ${new Date().toISOString()}"`);
         c++
+        
 
     } catch (error) {
         console.error('Error committing to Git:', error);
