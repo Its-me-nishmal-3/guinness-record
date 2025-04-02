@@ -17,7 +17,7 @@ function gitCommand(command) {
 // Function to modify a dummy file
 function modifyDummyFile() {
     const filePath = 'dummy.txt';    
-    const content = `Auto commit update`;
+    const content = `Auto commit update: ${new Date().toISOString()}\n`;
     fs.appendFileSync(filePath, content);
 }
 
