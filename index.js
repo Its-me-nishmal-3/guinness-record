@@ -36,7 +36,7 @@ async function commitToGit() {
         console.error('Error committing to Git:', error);
     } finally {
         // Schedule the next commit after this one finishes
-        setTimeout(commitToGit, 50); // 1 second interval
+        setTimeout(commitToGit, 30); // 1 second interval
     }
 }
 
@@ -54,5 +54,5 @@ async function pushToGit() {
 }
 
 // Start the commit and push loops
-setTimeout(commitToGit, 50); // Start committing after 1 second
+setTimeout(commitToGit, 30); // Start committing after 1 second
 setTimeout(pushToGit, 30000); // Start pushing after 30 seconds
