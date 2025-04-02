@@ -27,15 +27,13 @@ let commitCount = 0;
 // Function to commit changes to Git
 async function commitToGit() {
     try {
-        await modifyDummyFile(); // Update the file
-        await gitCommand('add', ['.']); // Stage all changes
-        await gitCommand('commit', ['-m', `Auto Commit ${commitCount} - ${new Date().toISOString()}`]); // Commit
+        await gitCommand('commit', ['--allow-empty', '-m', `Auto Commit ${commitCount} - ${new Date().toISOString()}`]); // Commit with allow-empty
         commitCount++;
     } catch (error) {
         console.error('Error committing to Git:', error);
     } finally {
         // Schedule the next commit after this one finishes
-        setTimeout(commitToGit, 0); // 1 second interval
+        setTimeout(commitToGit, 0); // Immediate next commit
     }
 }
 
@@ -53,5 +51,5 @@ async function pushToGit() {
 }
 
 // Start the commit and push loops
-setTimeout(commitToGit, 0); // Start committing after 1 second
+setTimeout(commitToGit, 0); // Start committing immediately
 setTimeout(pushToGit, 30000); // Start pushing after 30 seconds
