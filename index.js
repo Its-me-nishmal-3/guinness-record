@@ -14,11 +14,11 @@ function gitCommand(command) {
     });
 }
 
-// Function to modify a dummy file
+// Function to update dummy file content instead of appending
 function modifyDummyFile() {
     const filePath = 'dummy.txt';    
-    const content = `Auto commit update\n`;
-    fs.appendFileSync(filePath, content);
+    const content = `Last update: ${new Date().toISOString()}\n`; 
+    fs.writeFileSync(filePath, content); // Overwrite the file instead of appending
 }
 
 var c = 0;
@@ -31,7 +31,7 @@ async function commitToGit() {
 
         // Commit with a message
         await gitCommand(`git commit -m "Auto Commit ${c} - ${new Date().toISOString()}"`);
-        c++
+        c++;
 
     } catch (error) {
         console.error('Error committing to Git:', error);
@@ -41,7 +41,7 @@ async function commitToGit() {
 async function pushToGit() {
     try {
         await gitCommand('git push');
-        console.log('push')
+        console.log('push');
     } catch (error) {
         console.error('Error pushing to Git:', error);
     }
