@@ -51,4 +51,4 @@ async function commitAndPush() {
 }
 
 // Run commitAndPush every 5 seconds
-setInterval(commitAndPush, 200);
+setInterval(commitAndPush, 300);
