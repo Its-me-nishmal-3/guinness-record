@@ -1,5 +1,5 @@
-const { exec } = require('child_process');
-const fs = require('fs');
+const { exec } = require("child_process");
+const fs = require("fs");
 
 // Function to execute Git commands
 function gitCommand(command) {
@@ -16,40 +16,39 @@ function gitCommand(command) {
 
 // Function to modify a dummy file
 function modifyDummyFile() {
-    const filePath = 'dummy.txt';
+    const filePath = "dummy.txt";
     const content = `Auto commit update: ${new Date().toISOString()}\n`;
     fs.appendFileSync(filePath, content);
 }
 
-var c = 0;
-async function commitToGit() {
+// Function to check if there are changes to commit
+async function hasChanges() {
+    const status = await gitCommand("git status --porcelain");
+    return status.trim().length > 0; // Returns true if there are changes
+}
+
+let c = 0;
+
+async function commitAndPush() {
     try {
         modifyDummyFile(); // Ensure there's a change to commit
 
-        // Add files to staging area
-        await gitCommand('git add .');
+        if (await hasChanges()) {
+            await gitCommand("git add .");
+            await gitCommand(`git commit -m "Auto Commit ${c} - ${new Date().toISOString()}"`);
+            c++;
+            console.log(`Committed at ${new Date().toISOString()}`);
+        } else {
+            console.log("No changes to commit.");
+        }
 
-        // Commit with a message
-        await gitCommand(`git commit -m "Auto Commit ${c} - ${new Date().toISOString()}"`);
-        c++
+        await gitCommand("git push");
+        console.log("Pushed to remote repository");
 
-        console.log(`Committed at ${new Date().toISOString()}`);
     } catch (error) {
-        console.error('Error committing to Git:', error);
+        console.error("Error during Git operations:", error);
     }
 }
 
-async function pushToGit() {
-    try {
-        await gitCommand('git push');
-        console.log('Pushed to remote repository');
-    } catch (error) {
-        console.error('Error pushing to Git:', error);
-    }
-}
-
-// Run commitToGit every 1 second
-setInterval(commitToGit, 25);
-
-// Run pushToGit every 10 seconds
-setInterval(pushToGit, 10000);
+// Run commitAndPush every 5 seconds
+setInterval(commitAndPush, 5000);
