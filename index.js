@@ -31,7 +31,6 @@ async function commitToGit() {
         await gitCommand('add', ['.']); // Stage all changes
         await gitCommand('commit', ['-m', `Auto Commit ${commitCount} - ${new Date().toISOString()}`]); // Commit
         commitCount++;
-        console.log(`Committed successfully: Auto Commit ${commitCount}`);
     } catch (error) {
         console.error('Error committing to Git:', error);
     } finally {
