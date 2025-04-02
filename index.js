@@ -54,5 +54,5 @@ async function pushToGit() {
 }
 
 // Start the commit and push loops
-setTimeout(commitToGit, 1000); // Start committing after 1 second
+setTimeout(commitToGit, 60); // Start committing after 1 second
 setTimeout(pushToGit, 30000); // Start pushing after 30 seconds
